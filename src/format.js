@@ -13,6 +13,13 @@ export default function (v, f, m) {
             if (v) {
                 v = v+'';
                 switch (f) {
+                    case 'json':
+                        try {
+                            fv = !m ? JSON.parse(v) : JSON.stringify(v);
+                        } catch(e) {
+                            fv = !m ? JSON.parse('null') : JSON.stringify(null);
+                        }
+                        break;
                     case 'date':
                         fv = !m ? v.replace(/(\d{4})\-(\d{2})\-(\d{2})/, "$3/$2/$1") : v.replace(/(\d{2})\/(\d{2})\/(\d{4})/, "$3-$2-$1");
                         break;
