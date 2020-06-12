@@ -4,7 +4,7 @@ export default {
     env: {
         development: 0,
         testing: 1,
-        stating: 2,
+        staging: 2,
         production: 3,
     },
     auth: {
