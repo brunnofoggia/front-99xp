@@ -7,18 +7,27 @@ export default {
     apply($el) {
         
         $('[data-mask-format]', $el).each((x, el) => {
-            if($(el).attr('data-mask-format') in this) return this[$(el).attr('data-mask-format')]($(el));
-            
-            var opts = ($(el).attr('data-mask-options') || '{}').replace(/(\w+)\:/g, '"$1":');
-            
-            try {
-                opts = $.parseJSON(opts);
-            } catch(e) {
-                opts = {};
-            }
-            
-            $(el).mask($(el).attr('data-mask-format'), opts);
+            this.applyEl($(el));
         });
+    },
+    applyEl($el) {
+        if($el.attr('data-mask-format') in this) return this[$el.attr('data-mask-format')]($el);
+            
+        var opts = ($el.attr('data-mask-options') || '{}').replace(/(\w+)\:/g, '"$1":');
+        
+        try {
+            opts = $.parseJSON(opts);
+        } catch(e) {
+            opts = {};
+        }
+        
+        $el.mask($el.attr('data-mask-format'), opts);
+    },
+    applyToValue(v, format, o) {
+        var $el = $('<input type="text">').attr('value', v).attr('data-mask-format', format).attr('data-mask-options', JSON.stringify(o || {}));
+        this.applyEl($el);
+
+        return $el.val();
     },
     date($el) {
         $el.mask("00/00/0000", {placeholder: "__/__/____", clearIfNotMatch: true});
