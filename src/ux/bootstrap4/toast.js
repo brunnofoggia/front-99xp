@@ -14,7 +14,7 @@ export default function(opts={}) {
     
 
     $el = $(tpl).appendTo($p);
-    $el.toast(_.extend({autohide: true, delay: 2500}, opts)).toast('show');
+    $el.toast(_.defaults(opts, {autohide: true, delay: 2500})).toast('show');
     setTimeout(_.partial(($el)=>{
         $el.remove();
     }, $el), 3000);
