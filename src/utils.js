@@ -11,14 +11,20 @@ var utils = {};
  * @param afterWait function
  * @param interval integer microseconds interval between checks
  */
-utils.when = function (waitFunction, afterWait, interval) {
+utils.when = function (waitFunction, afterWait, interval, afterPassed, passed=0) {
     var test = waitFunction();
     !interval && (interval = 200);
 
     if (!test) {
-        return _.delay(_.bind(function (waitFunction, afterWait, interval) {
-            utils.when(waitFunction, afterWait, interval);
-        }, this, waitFunction, afterWait, interval), interval);
+        let afterPassedEndProccess = typeof afterPassed === 'function' ? afterPassed(passed) : false;
+        if(afterPassedEndProccess===true) {
+            return;
+        }
+
+        return _.delay(_.bind(function (waitFunction, afterWait, interval, afterPassed, passed) {
+            passed += interval;
+            utils.when(waitFunction, afterWait, interval, afterPassed, passed);
+        }, this, waitFunction, afterWait, interval, afterPassed, passed), interval);
     }
 
     afterWait();
