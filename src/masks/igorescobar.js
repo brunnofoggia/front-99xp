@@ -1,4 +1,5 @@
-
+import _ from 'underscore-99xp';
+import vx from '../front';
 /**
  * Masks
  */
@@ -49,13 +50,22 @@ export default {
     },
     cpfcnpj($el) {
         var docBehavior = function (val) {
-            return val.replace(/\D/g, '').length <= 11 ? '000.000.000-009' : '00.000.000/0000-00';
-        },
-                spOptions = {
-                    onKeyPress: function (val, e, field, options) {
-                        field.mask(docBehavior.apply({}, arguments), options);
-                    }
-                };
+                return val.replace(/\D/g, '').length <= 11 ? '000.000.000-009' : '00.000.000/0000-00';
+            },
+            spOptions = {
+                onKeyPress: function (val, e, field, options) {
+                    field.mask(docBehavior.apply({}, arguments), options);
+                },
+            };
+                
+        $el.bind('paste', _.partial(function (maskData, e) {
+            vx.utils.catchPaste(e, this, _.partial((maskData, v) => {
+                var $el = $(this);
+                $el.val(v.replace(/[^0-9]/g, '')).trigger('change').blur();
+                $el.mask(maskData[0], maskData[1]);
+            }, maskData));
+            vx.events.stopAll(e);
+        }, [docBehavior, spOptions]));
 
         $el.mask(docBehavior, spOptions);
     },
