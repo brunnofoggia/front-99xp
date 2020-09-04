@@ -9,7 +9,12 @@
         </button>
     </div>
     {% } %}
-    <div class="toast-body" style="background-color: rgba(255,255,255,.65);">
+    <div class="toast-body">
+        {% if(typeof title === 'undefined' && close) { %}
+        <button type="button" class="ml-2 mb-1 close text-5" style="position: absolute; right: 3px; top: -3px; opacity: .7; color: unset;" data-dismiss="toast" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        {% } %}
         {{msg}}
     </div>
 </div>
