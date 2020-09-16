@@ -260,7 +260,7 @@ Base64 = {_keyStr: "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz01234567
         return t
     }};
 
-function getQueryVariable(variable) {
+window.getQueryVariable = function(variable) {
     var query = window.location.search.substring(1);
     var vars = query.split('&');
     for (var i = 0; i < vars.length; i++) {
@@ -273,7 +273,7 @@ function getQueryVariable(variable) {
 //    console.log('Query variable %s not found', variable);
 }
 
-function urldecode(str) {
+window.urldecode = function(str) {
    return decodeURIComponent((str+'').replace(/\+/g, '%20'));
 }
 
