@@ -31,7 +31,7 @@ export default {
         return $el.val();
     },
     date($el) {
-        $el.mask("00/00/0000", {placeholder: "__/__/____", clearIfNotMatch: true});
+        $el.mask("00/00/0000", {placeholder: "__/__/____", clearIfNotMatch: false});
     },
     percent($el) {
         $el.mask("000,00", {reverse: true, selectOnFocus: true});
@@ -43,10 +43,10 @@ export default {
         $el.mask("#.##0,00", {reverse: true, selectOnFocus: true});
     },
     cpf($el) {
-        $el.mask("000.000.000-00", {placeholder: "000.000.000-00", clearIfNotMatch: true});
+        $el.mask("000.000.000-00", {placeholder: "000.000.000-00", clearIfNotMatch: false});
     },
     cnpj($el) {
-        $el.mask("00.000.000/0000-00", {placeholder: "00.000.000/0000-00", clearIfNotMatch: true});
+        $el.mask("00.000.000/0000-00", {placeholder: "00.000.000/0000-00", clearIfNotMatch: false});
     },
     cpfcnpj($el) {
         var docBehavior = function (val) {
