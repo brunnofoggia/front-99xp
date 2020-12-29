@@ -67,6 +67,9 @@ var locator = new (Bb.Collection.extend({
         }
         
         return this.get(list).read(id);
+    },
+    find(item, id=null) {
+        return id ? this.getListItem(item, id) : this.getItem(item);
     }
 }));
 
