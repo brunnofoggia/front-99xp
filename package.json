@@ -2,7 +2,7 @@
   "name": "front-99xp",
   "description": "-",
   "author": "Bruno Foggia",
-  "version": "0.10.0-beta",
+  "version": "0.11.0-alpha",
   "browser": "src/front.js",
   "main": "src/front.js",
   "module": "src/front.js",

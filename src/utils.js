@@ -57,4 +57,19 @@ utils.catchPaste = function (e, el, c) {
     }
 };
 
+utils.addCssTag = function (o) {
+    !_.isObject(o) && (o = {href: o});
+    o = _.defaults(o, {
+        rel: 'stylesheet',
+        type: 'text/css'
+    });
+
+    var link = document.createElement('link');
+    _.each(o, (v, k) => {
+        link[k] = v;
+    });
+
+    document.head.appendChild(link);
+}
+
 export default utils;
