@@ -98,7 +98,7 @@ utils.addCssTag = function (o, preload = true, head = true) {
         : {
               type: "text/css",
               rel: "preload",
-              onload: "this.rel='stylesheet'",
+              onload: "this.rel='stylesheet';document.onloadFired=true",
               as: "style",
               media: "all",
           };
