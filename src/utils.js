@@ -88,19 +88,30 @@ utils.catchPaste = function (e, el, c) {
     }
 };
 
-utils.addCssTag = function (o) {
+utils.addCssTag = function (o, preload = true, head = true) {
     !_.isObject(o) && (o = { href: o });
-    o = _.defaults(o, {
-        rel: "stylesheet",
-        type: "text/css",
-    });
+    var d = !preload
+        ? {
+              rel: "stylesheet",
+              type: "text/css",
+          }
+        : {
+              type: "text/css",
+              rel: "preload",
+              onload: "this.rel='stylesheet'",
+              as: "style",
+              media: "all",
+          };
+
+    o = _.defaults(o, d);
 
     var link = document.createElement("link");
     _.each(o, (v, k) => {
         link[k] = v;
     });
 
-    document.head.appendChild(link);
+    document[head ? "head" : "body"].appendChild(link);
+    return link;
 };
 
 window.URL = window.URL || window.webkitURL;
