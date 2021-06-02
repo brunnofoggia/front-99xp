@@ -114,6 +114,12 @@ utils.addCssTag = function (o, preload = true, head = true) {
     return link;
 };
 
+utils.addCssTagAfterDocumentLoad = function (o, preload = true, head = true) {
+    var link = utils.addCssTag(o, preload, head);
+    if (preload && document.onloadFired)
+        setTimeout(() => (link.rel = "stylesheet"), 10);
+};
+
 window.URL = window.URL || window.webkitURL;
 utils.openBlobPDF = function (url) {
     Bb.ajax({
@@ -142,6 +148,26 @@ utils.openBlob = function (content, type, filename) {
         a.click();
         window.URL.revokeObjectURL(fileURL);
     }
+};
+
+utils.geolocation = function (c) {
+    var s = (position) => {
+            return {
+                latitude: position.coords.latitude,
+                longitude: position.coords.longitude,
+            };
+        },
+        e = (err) => {
+            return { code: (err && err.code) || 0 };
+        };
+
+    if (!navigator.geolocation) {
+        return c(e());
+    }
+    navigator.geolocation.getCurrentPosition(
+        (data) => c(s(data)),
+        (err) => c(e(err))
+    );
 };
 
 export default utils;
