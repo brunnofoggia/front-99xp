@@ -170,4 +170,23 @@ utils.geolocation = function (c) {
     );
 };
 
+utils.file = {};
+utils.file.getData = function($el) {
+    var el = $el.get(0),
+        files = el?.files;
+
+    return files ? files[0] : null;
+}
+
+utils.file.getDataURL = function ($el, c) {
+    var file = utils.file.getData($el);
+    if(!file) return c(false);
+    
+    var reader = new FileReader();
+    reader.onloadend = function (e) { 
+        c(true, e.target.result);
+    };
+    return reader.readAsDataURL(file);
+}
+
 export default utils;
